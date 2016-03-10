@@ -2,6 +2,7 @@ final int boardWidth = 30; // number of dots across
 final int boardHeight = 30; // number of dots down
 final int dotSpacing = 30; // pixels between dot centers
 final int dotRadius = 3; // pixels
+PVector OldPosition;
 
 Dots dots;
 Pac pac;
@@ -36,6 +37,8 @@ void setup() {
 void draw() {
     clear();
     dots.render();
-    pac.render();
+    OldPosition = pac.getPosition();
+    pac.render(0,360);
+    dots.removed(OldPosition,pac.getPosition());
     walls.render();
 }
