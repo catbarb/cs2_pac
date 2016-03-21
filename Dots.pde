@@ -20,36 +20,33 @@ class Dots {
   // Write a comment explaining what your version does
   // if the inputs are not in the same row or column.
   void removed(PVector fromPosition, PVector toPosition) {
-    println("here");
-    if (pixelToDot(fromPosition.x) - pixelToDot(toPosition.x) <= 0) 
-    {
-      println("here 2");
-      for ( int xs = pixelToDot(fromPosition.x); xs < pixelToDot(toPosition.x); xs++) {
-        println("here 3");
+    if (pixelToDot(fromPosition.x) - pixelToDot(toPosition.x) <= 0) {
+      int newX = pixelToDot(toPosition.x);
+      for ( int oldX = pixelToDot(fromPosition.x); oldX <= newX; oldX++) {
         if (pixelToDot(fromPosition.y) - pixelToDot(toPosition.y) <= 0) 
         {
-          println("here 4");
-          for (int ys = pixelToDot(fromPosition.y); ys < pixelToDot(toPosition.y); ys++) {
-            dots [xs][ys] = false;
-            println("here 5");
+          int newY = pixelToDot(toPosition.y);
+          for (int oldY = pixelToDot(fromPosition.y); oldY <= newY; oldY++) {
+            dots [oldX][oldY] = false;
           }
         } else {
-          println("here 6");
-          for (int ys = pixelToDot(fromPosition.y); ys > pixelToDot(toPosition.y); ys--) {
-            dots [xs][ys] = false;
+          int newY = pixelToDot(toPosition.y);
+          for (int oldY = pixelToDot(fromPosition.y); oldY > newY; oldY--) {
+            dots [oldX][oldY] = false;
           }
         }
       }
     } else {
-      for ( int xs = pixelToDot(fromPosition.x); xs > pixelToDot(toPosition.x); xs--) {
+      int newY = pixelToDot(toPosition.x);
+      for ( int oldX = pixelToDot(fromPosition.x); oldX > newY; oldX--) {
         if (pixelToDot(fromPosition.y) - pixelToDot(toPosition.y) <= 0) 
         {
-          for (int ys = pixelToDot(fromPosition.y); ys < pixelToDot(fromPosition.y); ys++) {
-            dots [xs][ys] = false;
+          for (int oldY = pixelToDot(fromPosition.y); oldY <= pixelToDot(fromPosition.y); oldY++) {
+            dots [oldX][oldY] = false;
           }
         } else {
-          for (int ys = pixelToDot(fromPosition.y); ys > pixelToDot(toPosition.y); ys--) {
-            dots [xs][ys] = false;
+          for (int oldY = pixelToDot(fromPosition.y); oldY >= pixelToDot(toPosition.y); oldY--) {
+            dots [oldX][oldY] = false;
           }
         }
       }

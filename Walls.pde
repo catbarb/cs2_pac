@@ -4,6 +4,7 @@ class Walls {
   private boolean[][] vertical;
   // horizontal - true if there is a wall below that square.
   private boolean[][] horizontal;
+  boolean collision;
 
   // A new set of walls, for testing purposes
   // eventually, we'll want some particular levels
@@ -35,8 +36,67 @@ class Walls {
   // If there is a wall between the two given positions, return the point of collision.
   // Otherwise, return some value that can never be a collision.
   // Input & Output are in pixel coordinates
-  PVector collision(PVector fromPosition, PVector toPosition) {
-    return new PVector(0, 0);
+  void collisionCheck(PVector fromPosition, PVector toPosition) {
+    println("here");
+    if (pixelToDot(fromPosition.x) - pixelToDot(toPosition.x) <= 0) {
+      println("here 2");
+      int newX = pixelToDot(toPosition.x);
+      for ( int oldX = pixelToDot(fromPosition.x); oldX <= newX; oldX++) {
+        println("here 3");
+        if (pixelToDot(fromPosition.y) - pixelToDot(toPosition.y) <= 0) 
+        {
+          println("here 4");
+          int newY = pixelToDot(toPosition.y);
+          for (int oldY = pixelToDot(fromPosition.y); oldY <= newY; oldY++) {
+            if (vertical [oldX][oldY] == true){
+              collision = true;
+            } else if (horizontal [oldX][oldY] == true){
+              collision = true;
+            } else{
+              collision = false;
+            }
+          }
+        } else {
+          println("here 6");
+          int newY = pixelToDot(toPosition.y);
+          for (int oldY = pixelToDot(fromPosition.y); oldY > newY; oldY--) {
+            if (vertical [oldX][oldY] == true){
+              collision = true;
+            } else if (horizontal [oldX][oldY] == true){
+              collision = true;
+            } else{
+              collision = false;
+            }
+          }
+        }
+      }
+    } else {
+      int newY = pixelToDot(toPosition.x);
+      for ( int oldX = pixelToDot(fromPosition.x); oldX > newY; oldX--) {
+        if (pixelToDot(fromPosition.y) - pixelToDot(toPosition.y) <= 0) 
+        {
+          for (int oldY = pixelToDot(fromPosition.y); oldY <= pixelToDot(fromPosition.y); oldY++) {
+            if (vertical [oldX][oldY] == true){
+              collision = true;
+            } else if (horizontal [oldX][oldY] == true){
+              collision = true;
+            } else{
+              collision = false;
+            }
+          }
+        } else {
+          for (int oldY = pixelToDot(fromPosition.y); oldY >= pixelToDot(toPosition.y); oldY--) {
+            if (vertical [oldX][oldY] == true){
+              collision = true;
+            } else if (horizontal [oldX][oldY] == true){
+              collision = true;
+            } else{
+              collision = false;
+            }
+          }
+        }
+      }
+    }
   }
 
   void render() {

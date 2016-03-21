@@ -29,6 +29,7 @@ int pixelToDot(float x) {
 
 void setup() {
     size(900,900);
+    OldPosition = new PVector(dotToPixel(5), dotToPixel(0));
     dots = new Dots();
     pac = new Pac();
     walls = new Walls();
@@ -37,8 +38,8 @@ void setup() {
 void draw() {
     clear();
     dots.render();
-    OldPosition = pac.getPosition();
     pac.render(0,360);
-    dots.removed(OldPosition,pac.getPosition());
+    dots.removed(OldPosition,pac.getPosition());    
+    OldPosition = pac.getPosition();
     walls.render();
 }

@@ -13,7 +13,7 @@ class Pac {
 
   // return a copy of the current position
   PVector getPosition() {
-    return new PVector(0, 0);
+    return position.copy();
   }
 
   // set a new movement direction
@@ -41,9 +41,21 @@ class Pac {
   // If normal movement would hit a wall, find the position after bouncing off the wall.
   // The total distance travelled (before + after hitting the wall) should be the same.
   void updatePosition() {
-    if (keyPressed ==true){
+    walls.collisionCheck(OldPosition,pac.getPosition());
+    if(walls.collision == true){
+      move.set(0,0);
+      if ( travelDirection == Dir.EAST || position.x == 910 ) {
+        position.set(position.x+(speed), position.y);
+      }else if (travelDirection == Dir.WEST || position.x == -10) {
+        position.set(position.x- (speed), position.y);
+      }else if (travelDirection == Dir.NORTH || position.y == -10) {
+        position.set(position.x, position.y+(speed));
+      }else if (travelDirection == Dir.SOUTH || position.y == 910){
+        position.set(position.x, position.y-(speed));
+      }  
+    }else if (keyPressed ==true){
       keyPressed();
-    } else{
+    }else{
       move.set(0,0);
     }
     //println(move);
@@ -54,12 +66,17 @@ class Pac {
     //println("here");
     if (keyCode == LEFT) {
       move.set(-speed, 0);
+      travelDirection = Dir.EAST;
     } else if (keyCode == RIGHT) {
       move.set(speed, 0);
+      travelDirection = Dir.WEST;
     } else if (keyCode == UP) {
       move.set(0, -speed);
+      travelDirection = Dir.NORTH;
     } else if (keyCode == DOWN){
-      move.set(0, speed);}
+      move.set(0, speed);
+      travelDirection = Dir.SOUTH;
+    }
 }
 
 }
